@@ -1,511 +1,1124 @@
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
-<head>
-<meta charset="utf-8">
-<title>Welcome to the Neo-HPSTR Blog &#8211; Blog Title</title>
-<meta name="description" content="Describe this nonsense.">
-<meta name="keywords" content="Jekyll, theme, themes, responsive, blog, modern">
+<!DOCTYPE html>
+<html>
 
-<!-- Twitter Cards -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@aron_bordin">
-<meta name="twitter:creator" content="@aron_bordin">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Open Graph -->
-<meta property="og:locale" content="en_US">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Welcome to the Neo-HPSTR Blog">
-<meta property="og:description" content="Describe this nonsense.">
-<meta property="og:url" content="http://aronbordin.com/neo-hpstr-jekyll-theme/">
-<meta property="og:site_name" content="Blog Title">
-<meta property="og:image" content="http://aronbordin.com/neo-hpstr-jekyll-theme/images/images/logo.png">
+    <title>HyG</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href=" /css/fontawesome/css/font-awesome.min.css ">
+    <link rel="stylesheet" href=" /css/main.css ">
+    <link rel="canonical" href="http://gaohaoyang.github.io/">
+    <link rel="alternate" type="application/rss+xml" title="HyG" href="http://gaohaoyang.github.io /feed.xml ">
 
 
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?cf8506e0ef223e57ff6239944e5d46a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-<link rel="canonical" href="http://aronbordin.com/neo-hpstr-jekyll-theme/">
-<link href="http://aronbordin.com/neo-hpstr-jekyll-theme/feed.xml" type="application/atom+xml" rel="alternate" title="Blog Title Feed">
+      ga('create', 'UA-72449510-4', 'auto');
+      ga('send', 'pageview');
 
-<!-- http://t.co/dKP3o1e -->
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-
-<!-- For all browsers -->
-<link rel="stylesheet" href="http://aronbordin.com/neo-hpstr-jekyll-theme/assets/css/main.css">
-<link rel="stylesheet" href="http://aronbordin.com/neo-hpstr-jekyll-theme/assets/css/jquery.mmenu.all.css">
-<link rel="stylesheet" href="http://aronbordin.com/neo-hpstr-jekyll-theme/assets/css/jquery.floating-social-share.min.css">
-<!-- Webfonts -->
-<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
-
-<meta http-equiv="cleartype" content="on">
-
-<!-- Load Modernizr -->
-<script type="text/javascript" src="http://aronbordin.com/neo-hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
-
-<!-- Icons -->
-<!-- 16x16 -->
-<link rel="shortcut icon" href="http://aronbordin.com/neo-hpstr-jekyll-theme/favicon.ico">
-<!-- 32x32 -->
-<link rel="shortcut icon" href="http://aronbordin.com/neo-hpstr-jekyll-theme/favicon.png">
-<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
-<link rel="apple-touch-icon-precomposed" href="http://aronbordin.com/neo-hpstr-jekyll-theme/images/apple-touch-icon-precomposed.png">
-<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://aronbordin.com/neo-hpstr-jekyll-theme/images/apple-touch-icon-72x72-precomposed.png">
-<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://aronbordin.com/neo-hpstr-jekyll-theme/images/apple-touch-icon-114x114-precomposed.png">
-<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://aronbordin.com/neo-hpstr-jekyll-theme/images/apple-touch-icon-144x144-precomposed.png">
-
-
-
+    </script>
 
 </head>
 
-<body id="post-index">
 
-<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+  <body>
 
+    <header>
+    <div class="wrapper">
+        <a href="/" class="brand">HyG</a>
+        <small>Front-end Dev Engineer</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a class="active" href="/">
+                        
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
 
-
-<div class="header-menu header-menu-top">
-    <ul class="header-item-container">
-      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
-      <li class="header-item-title">
-        <a href="http://aronbordin.com/neo-hpstr-jekyll-theme/">
-          
-            <img class="logo" src="http://aronbordin.com/neo-hpstr-jekyll-theme/images/logo.png" alt="Blog Title">
-          
-          <a href="http://aronbordin.com/neo-hpstr-jekyll-theme/" class="title"> Blog Title</a>
-        </a>
-      </li>
-      
-        
-        
-
-        
-          <li class="header-item "><a href="http://aronbordin.com/neo-hpstr-jekyll-theme#"><h3>Favorites</h3></a>
-            <ul class="header-submenu">
-              
-                <li class="sub-item"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/code-highlighting-post/">Code Highlighter</a></li>
-              
-                <li class="sub-item"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/sample-post/">Sample Post</a></li>
-              
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>Collections
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/demo/">
+                        
+                            <i class="fa fa-play"></i>Demo
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-          </li>
-        
-      
-        
-        
-
-        
-          <li class="header-item "><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/categories"><h3>Categories</h3></a>
-            <ul class="header-submenu">
-              
-                
-                  <li class="sub-item"><a href="/categories/#image">image</a></li>
-              
-                
-                  <li class="sub-item"><a href="/categories/#intro">intro</a></li>
-              
-                
-                  <li class="sub-item"><a href="/categories/#sample">sample</a></li>
-              
-            </ul>
-          </li>
-        
-      
-        
-        
-
-        
-            
-                <li class="header-item "><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/tags"><h3>Tags</h3></a></li>
-            
-        
-      
-        
-        
-
-        
-            
-                <li class="header-item "><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/theme-setup/"><h3>Install</h3></a></li>
-            
-        
-      
-        
-        
-
-        
-            
-                <li class="header-item "><a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" target="_blank"><h3>Fork</h3></a></li>
-            
-        
-      
-        
-        
-
-        
-            
-                <li class="header-item "><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/"><h3>Home</h3></a></li>
-            
-        
-      
-      <li class="header-item"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/search"><h3><i class="fa fa-search"></i></h3></a></li>
-    </ul>
-  </div>
-<div class="entry-header">
-  <div class="header-title">
-    <div class="header-title-wrap">
-      <h1>Welcome to the Neo-HPSTR Blog</h1>
-      
-        <h2><span class="entry-date"><time>&nbsp;</time></span></h2>
-      
-
-      
-          <p class="entry-reading-time">
-            &nbsp;
-          </p><!-- /.entry-reading-time -->
-      
-    </div><!-- /.header-title-wrap -->
-  </div><!-- /.header-title -->
-</div><!-- /.entry-header -->
+        </nav>
+    </div>
+</header>
 
 
-<nav id="menu" style="display: none">
-  <ul>
-    
-      
-        <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/"><h3>Home</h3></a></li>
-      
-    
-      
-        <li><a href="http://aronbordin.com/neo-hpstr-jekyll-themehttp://github.com/aron-bordin/neo-hpstr-jekyll-theme"><h3>Fork</h3></a></li>
-      
-    
-      
-        <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/theme-setup/"><h3>Install</h3></a></li>
-      
-    
-      
-        <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/tags"><h3>Tags</h3></a></li>
-      
-    
-      
-        <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/categories"><h3>Categories</h3></a>
-          <ul>
+        <div class="page clearfix" index>
+    <div class="left">
+        <h1>Welcome to HyG's Blog!</h1>
+        <small>这里记录着我的前端学习之路</small>
+        <hr>
+        <ul>
             
-              
-                <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/categories/#image">image</a></li>
-            
-              
-                <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/categories/#intro">intro</a></li>
-            
-              
-                <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/categories/#sample">sample</a></li>
-            
-          </ul>
-        </li>
-      
-    
-      
-        <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme#"><h3>Favorites</h3></a>
-          <ul>
-            
-              <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/code-highlighting-post/">Code Highlighter</a></li>
-            
-              <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/sample-post/">Sample Post</a></li>
-            
-          </ul>
-        </li>
-      
-    
-  </ul>
-</nav>
+              <li>
+                <h2>
+                  <a class="post-link" href="/2016/03/12/jekyll-theme-version-2.0/">对这个 jekyll 博客主题的改版和重构</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2016-03-12
+                    </div>
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>Haoyang Gao
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
 
 
-  <a href="https://twitter.com/aron_bordin" class="btn btn-info button-twitter" data-show-count="false" data-size="large"><i class="fa fa-twitter"></i> <span> | Follow @aron_bordin</span></a>
-
-
-
-<div id="main" role="main">
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
   
-<article class="hentry">
-  <header>
     
-      <div class="entry-image-index">
-        <a href="http://aronbordin.com/neo-hpstr-jekyll-theme/feature-image/" title="Sample Post with Feature Image"><img src="http://aronbordin.com/neo-hpstr-jekyll-theme/images/feature.jpg" alt="Sample Post with Feature Image"></a>
-        <div class="image-credit">Image source: <a target="_blank" href="http://www.dargadgetz.com/ios-8-abstract-wallpaper-pack-for-iphone-5s-5c-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
-
-      </div><!-- /.entry-image -->
+        <a href="/category/#jekyll" title="Category: jekyll" rel="category">jekyll</a>
     
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2013-10-28T00:00:00-04:00"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/feature-image/">October 28, 2013</a></time></span><span class="author vcard"><span class="fn"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/about/" title="About Your name">Your name</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
     
-      <h1 class="entry-title"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/feature-image/" rel="bookmark" title="Sample Post with Feature Image" itemprop="url">Sample Post with Feature Image</a></h1>
+        <a href="/tag/#jekyll" title="Tag: jekyll" rel="tag">jekyll</a>&nbsp;
     
-  </header>
-  <div class="entry-content">
+        <a href="/tag/#端口" title="Tag: 端口" rel="tag">端口</a>&nbsp;
     
-      <p>This post demonstrate how to use feature images on your posts.</p>
-
-<p>Just add:</p>
-
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">image</span><span class="pi">:</span>
-  <span class="s">feature</span><span class="pi">:</span> <span class="s">filename.png</span></code></pre></figure>
-
-<p>where <strong>filename.png</strong> is an image inside <code>images</code> folder. This image will be displayed on the top of your post.</p>
-
-<p>Warning! The image height is not limited. The image width will be adjusted to fit on the post container, make sure to not use images with a high height.</p>
-
+        <a href="/tag/#markdown" title="Tag: markdown" rel="tag">markdown</a>&nbsp;
     
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
+        <a href="/tag/#Foxit" title="Tag: Foxit" rel="tag">Foxit</a>&nbsp;
     
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2013-10-28T00:00:00-04:00"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/dark-post/">October 28, 2013</a></time></span><span class="author vcard"><span class="fn"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/about/" title="About Your name">Your name</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
+        <a href="/tag/#RubyGems" title="Tag: RubyGems" rel="tag">RubyGems</a>&nbsp;
     
-      <h1 class="entry-title"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/dark-post/" rel="bookmark" title="Dark Post" itemprop="url">Dark Post</a></h1>
+        <a href="/tag/#HTML" title="Tag: HTML" rel="tag">HTML</a>&nbsp;
     
-  </header>
-  <div class="entry-content">
+        <a href="/tag/#CSS" title="Tag: CSS" rel="tag">CSS</a>
     
-      <p>This is a sample post to show the dark post theme. To use this dark theme, just add:</p>
+  
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">layout</span><span class="pi">:</span> <span class="s">dark-post</span></code></pre></figure>
+</span>
 
-<p>on your post. This theme adds a dark background with a white panel to show your content.</p>
+                    </div>
+                </div>
+                <div class="excerpt">
+                    
+<p>本文主要说明对这个博客主题的改版和代码重构的过程。这个简洁高雅的博客主题受到了很多朋友的喜欢。在写第一版界面时，我对前端并不是很熟悉，对<code class="highlighter-rouge">Jekyll</code>也不熟悉。现在距离当时也一年了，对自己当时写的代码也不太满意了，同时<code class="highlighter-rouge">Jekyll</code>如今也已经升级了，目前最新版为3.1.2。因此我在临近毕业尚未入职前做一下博客主题的代码重构和改版吧。</p>
 
+<p>主要想做这些事情有：添加归档，添加标签，添加分类页面，主页显示文章摘要，代码去除 jQuery 和 BootStrap，优化移动端显示，将所有变量写入配置文件<code class="highlighter-rouge">_config.yml</code>中等。再优化一些细节吧。希望更多人会喜欢。</p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2016/03/12/jekyll-theme-version-2.0/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2016/01/01/History-API/">前端处理动态 url 和 pushStatus 的使用</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2016-01-01
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
+        <a href="/category/#JavaScript" title="Category: JavaScript" rel="category">JavaScript</a>
     
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2013-10-26T00:00:00-04:00"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/image/background-image/">October 26, 2013</a></time></span><span class="author vcard"><span class="fn"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/about/" title="About Your name">Your name</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
     
-      <h1 class="entry-title"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/image/background-image/" rel="bookmark" title="Post with a Background Image" itemprop="url">Post with a Background Image</a></h1>
+        <a href="/tag/#JavaScript" title="Tag: JavaScript" rel="tag">JavaScript</a>&nbsp;
     
-  </header>
-  <div class="entry-content">
+        <a href="/tag/#Ajax" title="Tag: Ajax" rel="tag">Ajax</a>&nbsp;
     
-      <p>Here be a sample post with a custom background image. To utilize this “feature” just add the following YAML to a post’s front matter.</p>
-
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">image</span><span class="pi">:</span>
-  <span class="s">background</span><span class="pi">:</span> <span class="s">filename.png</span></code></pre></figure>
-
-<p>This little bit of YAML makes the assumption that your background image asset is in the <code>/images</code> folder. If you place it somewhere else or are hotlinking from the web, just include the full http(s):// URL. Either way you should have a background image that is tiled.</p>
-
-<p>If you want to set a background image for the entire site just add <code>background: filename.png</code> to your <code>_config.yml</code> and BOOM — background images on every page!</p>
-
-<div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com" class="notice">Background images from <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></div>
-
+        <a href="/tag/#URL" title="Tag: URL" rel="tag">URL</a>&nbsp;
     
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
+        <a href="/tag/#HistoryApi" title="Tag: HistoryApi" rel="tag">HistoryApi</a>&nbsp;
     
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2013-08-16T00:00:00-04:00"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/code-highlighting-post/">August 16, 2013</a></time></span><span class="author vcard"><span class="fn"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/about/" title="About Your name">Your name</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
+        <a href="/tag/#pushState" title="Tag: pushState" rel="tag">pushState</a>&nbsp;
     
-      <h1 class="entry-title"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/code-highlighting-post/" rel="bookmark" title="Syntax Highlighting Post" itemprop="url">Syntax Highlighting Post</a></h1>
+        <a href="/tag/#pjax" title="Tag: pjax" rel="tag">pjax</a>
     
-  </header>
-  <div class="entry-content">
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">起因</a></li>
+</ul>
+
+<h2 id="section">起因</h2>
+
+<p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
+
+<ul>
+  <li>webpack 自动构建</li>
+  <li>AMD 模块化 js</li>
+  <li>Sass 预处理 CSS</li>
+  <li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
+</ul>
+
+<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2016/01/01/History-API/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2015/07/24/low-IE-click-empty-block-bug/">在低版本 IE 中点击空 block 元素的问题</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2015-07-24
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
-      <p>Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+        <a href="/category/#CSS" title="Category: CSS" rel="category">CSS</a>
+    
+  
 
-<h3 id="rouge-code-blocks">Rouge Code Blocks</h3>
+  <!-- <span class="point">•</span> -->
+</span>
 
-<p>To modify styling and highlight colors edit <code>/_sass/_rouge.scss</code>.</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#container</span> <span class="p">{</span>
-    <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
-    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
+                    </div>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"pagination"</span> <span class="na">role=</span><span class="s">"navigation"</span><span class="nt">&gt;</span>
-    {% if page.previous %}
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.url }}{{ page.previous.url }}"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"{{ page.previous.title }}"</span><span class="nt">&gt;</span>Previous article<span class="nt">&lt;/a&gt;</span>
-    {% endif %}
-    {% if page.next %}
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.url }}{{ page.next.url }}"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"{{ page.next.title }}"</span><span class="nt">&gt;</span>Next article<span class="nt">&lt;/a&gt;</span>
-    {% endif %}
-<span class="nt">&lt;/nav&gt;</span><span class="c">&lt;!-- /.pagination --&gt;</span></code></pre></figure>
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#IE" title="Tag: IE" rel="tag">IE</a>&nbsp;
+    
+        <a href="/tag/#CSS" title="Tag: CSS" rel="tag">CSS</a>&nbsp;
+    
+        <a href="/tag/#兼容性" title="Tag: 兼容性" rel="tag">兼容性</a>&nbsp;
+    
+        <a href="/tag/#HTML" title="Tag: HTML" rel="tag">HTML</a>
+    
+  
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Jekyll</span>
-  <span class="k">class</span> <span class="nc">TagIndex</span> <span class="o">&lt;</span> <span class="no">Page</span>
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
-      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
-      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
-      <span class="vi">@dir</span> <span class="o">=</span> <span class="n">dir</span>
-      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'_layouts'</span><span class="p">),</span> <span class="s1">'tag_index.html'</span><span class="p">)</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'tag'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag</span>
-      <span class="n">tag_title_prefix</span> <span class="o">=</span> <span class="n">site</span><span class="p">.</span><span class="nf">config</span><span class="p">[</span><span class="s1">'tag_title_prefix'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'Tagged: '</span>
-      <span class="n">tag_title_suffix</span> <span class="o">=</span> <span class="n">site</span><span class="p">.</span><span class="nf">config</span><span class="p">[</span><span class="s1">'tag_title_suffix'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'&amp;#8211;'</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="n">tag_title_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"An archive of posts tagged </span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">."</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre></figure>
+</span>
 
-<h3 id="standard-code-block">Standard Code Block</h3>
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">问题描述</a></li>
+</ul>
 
-<pre><code>&lt;nav class="pagination" role="navigation"&gt;
-    {% if page.previous %}
-        &lt;a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}"&gt;Previous article&lt;/a&gt;
-    {% endif %}
-    {% if page.next %}
-        &lt;a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}"&gt;Next article&lt;/a&gt;
-    {% endif %}
-&lt;/nav&gt;&lt;!-- /.pagination --&gt;
-</code></pre>
+<h2 id="section">问题描述</h2>
 
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p><a href="http://en.wikipedia.org/wiki/Syntax_highlighting">http://en.wikipedia.org/wiki/Syntax_highlighting</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
+<p>当我们点击一个空的、没有任何内容的 div 或者其他块级元素时。在 IE11 以下，是没有反应的。</p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2015/07/24/low-IE-click-empty-block-bug/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2015/07/09/JavaScript-Net/">JavaScript 阶段总结</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2015-07-09
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#JavaScript" title="Category: JavaScript" rel="category">JavaScript</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#JavaScript" title="Tag: JavaScript" rel="tag">JavaScript</a>&nbsp;
+    
+        <a href="/tag/#HTML" title="Tag: HTML" rel="tag">HTML</a>&nbsp;
+    
+        <a href="/tag/#CSS" title="Tag: CSS" rel="tag">CSS</a>&nbsp;
+    
+        <a href="/tag/#思维导图" title="Tag: 思维导图" rel="tag">思维导图</a>&nbsp;
+    
+        <a href="/tag/#技能树" title="Tag: 技能树" rel="tag">技能树</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2015/07/09/JavaScript-Net/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2015/06/18/weinre/">Weinre --WebApp 调试工具</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2015-06-18
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#JavaScript" title="Category: JavaScript" rel="category">JavaScript</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#Weinre" title="Tag: Weinre" rel="tag">Weinre</a>&nbsp;
+    
+        <a href="/tag/#WebApp" title="Tag: WebApp" rel="tag">WebApp</a>&nbsp;
+    
+        <a href="/tag/#调试工具" title="Tag: 调试工具" rel="tag">调试工具</a>&nbsp;
+    
+        <a href="/tag/#JavaScript" title="Tag: JavaScript" rel="tag">JavaScript</a>&nbsp;
+    
+        <a href="/tag/#HTML" title="Tag: HTML" rel="tag">HTML</a>&nbsp;
+    
+        <a href="/tag/#CSS" title="Tag: CSS" rel="tag">CSS</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <ul id="markdown-toc">
+  <li><a href="#weinre" id="markdown-toc-weinre">什么是 weinre？</a></li>
+</ul>
+
+<h2 id="weinre">什么是 weinre？</h2>
+
+<p><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">weinre官网</a> 上有两句有意思的介绍：</p>
+
+<blockquote>
+  <p><strong>weinre</strong> is <strong>WE</strong>b <strong>IN</strong>spector <strong>RE</strong>mote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really.</p>
+
+  <p><strong>weinre</strong> is a debugger for web pages, like FireBug (for FireFox) and Web Inspector (for WebKit-based browsers), except it’s designed to work remotely, and in particular, to allow you debug web pages on a mobile device such as a phone.</p>
+</blockquote>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2015/06/18/weinre/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+        </ul>
+
+
+
+        <!-- Pagination links -->
+        <div class="pagination">
+          
+            <span class="previous disable"><i class="fa fa-angle-double-left"></i></span>
+            <span class="previous disable"><i class="fa fa-angle-left"></i></span>
+          
+          <span class="page_number ">1/5</span>
+          
+            <a href="/page2" class="next"><i class="fa fa-angle-right"></i></a>
+            <a href="/page5" class="next"><i class="fa fa-angle-double-right"></i></a>
+          
+        </div>
+    </div>
+    <!-- <button class="anchor"><i class="fa fa-anchor"></i></button> -->
+    <div class="right">
+        <div class="wrap">
+            <div class="side">
+                <div>
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Recent Posts
+                </div>
+                <ul class="content-ul" recent>
+                    
+                        <li><a href="/2016/03/12/jekyll-theme-version-2.0/">对这个 jekyll 博客主题的改版和重构</a></li>
+                    
+                        <li><a href="/2016/01/01/History-API/">前端处理动态 url 和 pushStatus 的使用</a></li>
+                    
+                        <li><a href="/2015/07/24/low-IE-click-empty-block-bug/">在低版本 IE 中点击空 block 元素的问题</a></li>
+                    
+                        <li><a href="/2015/07/09/JavaScript-Net/">JavaScript 阶段总结</a></li>
+                    
+                        <li><a href="/2015/06/18/weinre/">Weinre --WebApp 调试工具</a></li>
+                    
+                        <li><a href="/2015/06/17/web-app/">Web App 相关技术</a></li>
+                    
+                        <li><a href="/2015/06/15/JavaScript-Object-Oriented/">JavaScript 面向对象</a></li>
+                    
+                        <li><a href="/2015/06/14/JavaScript-closure/">JavaScript 中的闭包</a></li>
+                    
+                        <li><a href="/2015/06/12/JavaScript-this/">JavaScript 中的 this</a></li>
+                    
+                        <li><a href="/2015/06/11/JavaScript-function/">JavaScript 函数</a></li>
+                    
+                </ul>
+            </div>
+
+            <!-- Content -->
+            <div class="side ">
+                <div>
+                    <i class="fa fa-th-list"></i>
+                    Categories
+                </div>
+                <ul class="content-ul" cate>
+                    
+                    <li>
+                        <a href="/category/#jekyll" class="categories-list-item" cate="jekyll">
+                            <span class="name">
+                                jekyll
+                            </span>
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#Bootstrap" class="categories-list-item" cate="Bootstrap">
+                            <span class="name">
+                                Bootstrap
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#Sublime" class="categories-list-item" cate="Sublime">
+                            <span class="name">
+                                Sublime
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#JavaScript" class="categories-list-item" cate="JavaScript">
+                            <span class="name">
+                                JavaScript
+                            </span>
+                            <span class="badge">11</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#GitHub" class="categories-list-item" cate="GitHub">
+                            <span class="name">
+                                GitHub
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#HTML" class="categories-list-item" cate="HTML">
+                            <span class="name">
+                                HTML
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#CSS" class="categories-list-item" cate="CSS">
+                            <span class="name">
+                                CSS
+                            </span>
+                            <span class="badge">2</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#Tools" class="categories-list-item" cate="Tools">
+                            <span class="name">
+                                Tools
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#Interview" class="categories-list-item" cate="Interview">
+                            <span class="name">
+                                Interview
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <div class="side">
+                <div>
+                    <i class="fa fa-tags"></i>
+                    Tags
+                </div>
+                <div class="tags-cloud">
+                    
+                    
+                    
+                    
+                    
+
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#jekyll" style="font-size: 10.5pt; color: #777;">jekyll</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#RubyGems" style="font-size: 10pt; color: #888;">RubyGems</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#BootStrap" style="font-size: 9pt; color: #999;">BootStrap</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#HTML" style="font-size: 14pt; color: #444;">HTML</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#CSS" style="font-size: 14.5pt; color: #333;">CSS</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Zhihu" style="font-size: 9pt; color: #999;">Zhihu</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Sublime" style="font-size: 9pt; color: #999;">Sublime</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#jshint" style="font-size: 9pt; color: #999;">jshint</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#csslint" style="font-size: 9pt; color: #999;">csslint</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#JavaScript" style="font-size: 18pt; color: #000;">JavaScript</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Array" style="font-size: 9pt; color: #999;">Array</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#算法" style="font-size: 9pt; color: #999;">算法</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#慕课网" style="font-size: 13pt; color: #555;">慕课网</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#GitHub" style="font-size: 9pt; color: #999;">GitHub</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#同步" style="font-size: 9pt; color: #999;">同步</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#fork" style="font-size: 9pt; color: #999;">fork</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Baidu" style="font-size: 10pt; color: #888;">Baidu</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#ife" style="font-size: 14pt; color: #444;">ife</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#task" style="font-size: 9pt; color: #999;">task</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#tools" style="font-size: 9pt; color: #999;">tools</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#reveal" style="font-size: 9pt; color: #999;">reveal</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#配色" style="font-size: 9pt; color: #999;">配色</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#作用域" style="font-size: 9pt; color: #999;">作用域</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#面试" style="font-size: 9pt; color: #999;">面试</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Lenovo" style="font-size: 9pt; color: #999;">Lenovo</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#实习" style="font-size: 9pt; color: #999;">实习</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#函数" style="font-size: 9pt; color: #999;">函数</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#this" style="font-size: 9pt; color: #999;">this</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#闭包" style="font-size: 9pt; color: #999;">闭包</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#面向对象" style="font-size: 9pt; color: #999;">面向对象</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Sass" style="font-size: 9pt; color: #999;">Sass</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#移动端" style="font-size: 9pt; color: #999;">移动端</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#XSS" style="font-size: 9pt; color: #999;">XSS</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#AMD" style="font-size: 9pt; color: #999;">AMD</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#requireJS" style="font-size: 9pt; color: #999;">requireJS</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#CommonJS" style="font-size: 9pt; color: #999;">CommonJS</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#性能优化" style="font-size: 9pt; color: #999;">性能优化</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#WebApp" style="font-size: 10pt; color: #888;">WebApp</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Weinre" style="font-size: 9pt; color: #999;">Weinre</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#调试工具" style="font-size: 9pt; color: #999;">调试工具</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#思维导图" style="font-size: 9pt; color: #999;">思维导图</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#技能树" style="font-size: 9pt; color: #999;">技能树</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#IE" style="font-size: 9pt; color: #999;">IE</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#兼容性" style="font-size: 9pt; color: #999;">兼容性</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Ajax" style="font-size: 9pt; color: #999;">Ajax</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#URL" style="font-size: 9pt; color: #999;">URL</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#HistoryApi" style="font-size: 9pt; color: #999;">HistoryApi</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#pushState" style="font-size: 9pt; color: #999;">pushState</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#pjax" style="font-size: 9pt; color: #999;">pjax</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#端口" style="font-size: 9pt; color: #999;">端口</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#markdown" style="font-size: 9pt; color: #999;">markdown</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Foxit" style="font-size: 9pt; color: #999;">Foxit</a>
+                    
+                </div>
+            </div>
+
+            <!-- <div class="side">
+                <div>
+                    <i class="fa fa-external-link"></i>
+                    Links
+                </div>
+                <ul  class="content-ul">
+
+                </ul>
+            </div> -->
+        </div>
+    </div>
 </div>
-
-    
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2013-08-12T00:00:00-04:00"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/sample-link-post/">August 12, 2013</a></time></span><span class="author vcard"><span class="fn"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/about/" title="About Your name">Your name</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/intro/sample-link-post/" class="permalink" rel="bookmark" title="Sample Link Post"><i class="fa fa-bookmark"></i></a> <a href="http://mademistakes.com">Sample Link Post</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    
-      <p>This theme supports <strong>link posts</strong>, made famous by John Gruber. To use, just add <code>link: http://url-you-want-linked</code> to the post’s YAML front matter and you’re done.</p>
-
-    
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
+<!-- <script src="/js/scroll.min.js " charset="utf-8"></script> -->
+<!-- <script src="/js/pageContent.js " charset="utf-8"></script> -->
 
 
-
-<div class="pagination">
-  <ul class="inline-list">
-    
-    
-
-    
-    
-      <li><strong class="current-page">1</strong></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-
-    
-    
-
-    
-      <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/page2/">2</a></li>
-    
-
-    
-    
-      <li><a href="http://aronbordin.com/neo-hpstr-jekyll-theme/page2/" class="btn">Next</a></li>
-    
-  </ul>
-</div>
+    <footer class="site-footer">
 
 
-</div><!-- /#main -->
+  <div class="wrapper">
+      <p class="description">
+          
+          本站记录我前端之旅的沿途风景！
+          
+      </p>
+        <p class="contact">
+            Contact me at:
+            
+            <a href="https://github.com/Gaohaoyang"><i class="fa fa-github" aria-hidden="true"></i></a>
+            
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://aronbordin.com/neo-hpstr-jekyll-theme/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script type="text/javascript" src="http://aronbordin.com/neo-hpstr-jekyll-theme/assets/js/scripts.min.js"></script>
-<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            
+            <a href="mailto:gaohaoyang126@126.com"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="http://weibo.com/3115521wh"><i class="fa fa-weibo" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="https://www.zhihu.com/people/gaohaoyang"><i class="iconfont">&#xe829;</i></a>
+            
+
+            
+            <a href="https://twitter.com/gaohaoyang126"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="https://www.facebook.com/gaohaoyang.water"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+
+  </div>
+</footer>
+<script src="/js/main.js " charset="utf-8"></script>
 
 
+  </body>
 
-
-
-
-
-<script type="text/javascript">
-    sharing();
-</script>
-
-
-
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    <span>&copy; 2016 Your name. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
-
-  </footer>
-</div><!-- /.footer-wrapper -->
-
-</body>
 </html>
