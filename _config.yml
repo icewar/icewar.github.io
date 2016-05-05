@@ -6,10 +6,10 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: HyG
-brief-intro: Front-end Dev Engineer
+title: IceWAR
+brief-intro: Sec Dev Engineer
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://gaohaoyang.github.io" # the base hostname & protocol for your site
+url: "http://icewar.github.io" # the base hostname & protocol for your site
 
 permalink: /:year/:month/:day/:title/
 
@@ -21,7 +21,7 @@ email: gaohaoyang126@126.com
 weibo_username: 3115521wh
 zhihu_username: gaohaoyang
 
-description_footer: 本站记录我前端之旅的沿途风景！
+description_footer: 本站记录我安全之旅的沿途风景！
 
 # comments
 # two ways to comment, only choose one, and use your own short name
