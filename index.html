@@ -1,80 +1,45 @@
 ---
-layout: base
+layout: post-index
+title: "Welcome to the Neo-HPSTR Blog"
+description: "Describe this nonsense."
+tags: [Jekyll, theme, themes, responsive, blog, modern]
+comments: false
 ---
-<div class="blog-cover" style="background-image:url(/images/{{ site.inc.cover_image }});">
 
-    <section>
-        <div class="container">
-            <h1>{{ site.inc.title }}</h1>
-            {% if site.inc.subtitle %}<h3>{{ site.inc.subtitle }}</h3>{% endif %}
+{% for post in paginator.posts %}
+<article class="hentry">
+  <header>
+    {% if post.image.feature %}
+      <div class="entry-image-index">
+        <a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}"><img src="{{ site.url }}/images/{{ post.image.feature }}" alt="{{ post.title }}"></a>
+        {% if post.image.credit %}<div class="image-credit">Image source: <a target="_blank" href="{{ post.image.creditlink }}">{{ post.image.credit }}</a></div><!-- /.image-credit -->{% endif %}
 
-            {% if site.inc.twitter %}
-            <a href="https://twitter.com/{{ site.inc.twitter }}" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter"></i></a>
-            {% endif %}
-            {% if site.inc.facebook %}
-            <a href="http://facebook.com/{{ site.inc.facebook }}" title="Like on Facebook" target="_blank"><i class="icon icon-facebook"></i></a>
-            {% endif %}
-            <a href="/feed.xml" title="RSS Feed">
-                <i class="icon icon-rss"></i>
-            </a>
-        </div>
-    </section>
-</div>
-
-<article class="container">
-  <section class="index">
-    <address>
-      {% if site.author.image %}<img src="/images/{{ site.author.image }}" class="big-avatar">{% endif %}
-      <p><strong><a rel="author" href="https://twitter.com/{{ site.author.twitter }}" title="{{ site.author_name }}" target="_blank" style="font-size: 1.5em;">{{ site.author.name }}</a></strong><br />
-      <span class="muted">{{ site.author.bio }}</span>
-      </p>
-    </address>
-  </section>
-  {% for post in paginator.posts %}
-    {% unless post.draft %}
-      <section class="index">
-        <div class="row">
-          {% if post.thumbnail %}
-            <div class="col-sm-9">
-          {% else %}
-            <div class="col-sm-12">
-          {% endif %}
-          <h2 class="title"><a href="{{ post.url }}" rel="prefetch">{{ post.title }}</a></h2>
-          {% if post.subtitle %}
-          <p class="subtitle">{{ post.subtitle }}</p>
-          {% endif %}
-          <div class="meta">
-              <time pubdate datetime="{{ post.date | date: "%Y-%d-%B" }}" title="{{ post.date | date: "%B %d, %Y" }}">{{ post.date | date: "%B %d, %Y" }}</time>
-          </div>
-          <p class="tags">
-            {{ post | tags }}
-          </p>
-          {% if post.excerpt %}
-          <p>{{ post.excerpt }}</p>
-          {% endif %}
-          {% if post.thumbnail %}
-            </div>
-            <div class="col-sm-3">
-              <a href="{{ post.url }}" rel="prefetch" class="thumbnail-link"><img src="{{ post.thumbnail }}" alt="thumbnail" class="thumbnail"></a>
-            </div>
-          {% else %}
-            </div>
-          {% endif %}
-        </div>
-        <hr>
-      </section>
-    {% endunless %}
-  {% endfor %}
-  <section class="pagination" style="text-align:center">
-    {% if paginator.previous_page %}
-      {% if paginator.previous_page == 1 %}
-      <a href="/" class="btn btn-outline">&lt; Newer</a>
-      {% else %}
-      <a href="/page{{ paginator.previous_page }}" class="btn btn-outline">&lt; Newer</a>
+      </div><!-- /.entry-image -->
+    {% endif %}
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="{{ post.date | date_to_xmlschema }}"><a href="{{ site.url }}{{ post.url }}">{{ post.date | date: "%B %d, %Y" }}</a></time></span><span class="author vcard"><span class="fn"><a href="{{ site.url }}/about/" title="About {{ site.owner.name }}">{{ site.owner.name }}</a></span></span>
+      {% if site.reading_time %}
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        {% assign readtime = post.content | strip_html | number_of_words | divided_by:site.words_per_minute %}
+        Reading time ~{% if readtime <= 1 %}1 minute{% else %}{{ readtime }} minutes{% endif %}
+      </span><!-- /.entry-reading-time -->
       {% endif %}
+    </div><!-- /.entry-meta -->
+    {% if post.link %}
+      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
+    {% else %}
+      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
     {% endif %}
-    {% if paginator.next_page %}
-      <a href="/page{{ paginator.next_page }}" class="btn btn-outline">Older &gt;</a>
+  </header>
+  <div class="entry-content">
+    {% if post.content contains "<!-- more -->" %}
+    {{ post.content | split:"<!-- more -->" | first % }}
+    {% else %}
+      {{ post.content }}
     {% endif %}
-  </section>
-</article>
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+{% endfor %}
+
+{% include pagination.html %}
