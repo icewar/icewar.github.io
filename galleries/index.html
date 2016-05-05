@@ -20,8 +20,10 @@ layout: base
         </div>
     </section>
 </div>
-
 <article class="container">
+  <section class="index">
+    <h1>Photograpy Gallery</h1>
+  </section>
   <section class="index">
     <address>
       {% if site.author.image %}<img src="/images/{{ site.author.image }}" class="big-avatar">{% endif %}
@@ -30,32 +32,31 @@ layout: base
       </p>
     </address>
   </section>
-  {% for post in paginator.posts %}
-    {% unless post.draft %}
+  {% for gallery in site.data['galleries'] %}
       <section class="index">
         <div class="row">
-          {% if post.thumbnail %}
+          {% if gallery.thumbnail %}
             <div class="col-sm-9">
           {% else %}
             <div class="col-sm-12">
           {% endif %}
-          <h2 class="title"><a href="{{ post.url }}" rel="prefetch">{{ post.title }}</a></h2>
-          {% if post.subtitle %}
-          <p class="subtitle">{{ post.subtitle }}</p>
-          {% endif %}
+          <h3 class="title">
+            <a href="{{ gallery.url }}">{{ gallery.name }}</a>
+          </h2>
           <div class="meta">
-              <time pubdate datetime="{{ post.date | date: "%Y-%d-%B" }}" title="{{ post.date | date: "%B %d, %Y" }}">{{ post.date | date: "%B %d, %Y" }}</time>
+            {% if gallery.top %}
+            TOP
+            {% else %}
+            {{ gallery.date }}
+            {% endif %}
           </div>
-          <p class="tags">
-            {{ post | tags }}
-          </p>
-          {% if post.excerpt %}
-          <p>{{ post.excerpt }}</p>
+          {% if gallery.excerpt %}
+          <p>{{ gallery.excerpt }}</p>
           {% endif %}
-          {% if post.thumbnail %}
+          {% if gallery.thumbnail %}
             </div>
             <div class="col-sm-3">
-              <a href="{{ post.url }}" rel="prefetch" class="thumbnail-link"><img src="{{ post.thumbnail }}" alt="thumbnail" class="thumbnail"></a>
+              <a href="{{ gallery.url }}" rel="prefetch" class="thumbnail-link"><img src="{{ gallery.thumbnail }}" alt="thumbnail" class="thumbnail"></a>
             </div>
           {% else %}
             </div>
@@ -63,18 +64,5 @@ layout: base
         </div>
         <hr>
       </section>
-    {% endunless %}
   {% endfor %}
-  <section class="pagination" style="text-align:center">
-    {% if paginator.previous_page %}
-      {% if paginator.previous_page == 1 %}
-      <a href="/" class="btn btn-outline">&lt; Newer</a>
-      {% else %}
-      <a href="/page{{ paginator.previous_page }}" class="btn btn-outline">&lt; Newer</a>
-      {% endif %}
-    {% endif %}
-    {% if paginator.next_page %}
-      <a href="/page{{ paginator.next_page }}" class="btn btn-outline">Older &gt;</a>
-    {% endif %}
-  </section>
 </article>

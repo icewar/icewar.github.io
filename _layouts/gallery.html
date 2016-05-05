@@ -1,0 +1,18 @@
+---
+layout: blank
+gallery: true
+---
+<div id="galleria">
+</div>
+<script>
+  var data = [
+  {% for photo in page.photos %}
+{
+  image: "{{ photo.url }}",
+  thumb: "{{ photo.thumbnail_url }}"
+},
+  {% endfor %}
+
+  ];
+</script>
+

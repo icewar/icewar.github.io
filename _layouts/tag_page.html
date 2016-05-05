@@ -1,0 +1,33 @@
+---
+layout: base
+---
+<article class="container">
+  <section class="index">
+    <h1 class="special-header black">Tag: {{ page.tag }}</h1>
+  </section>
+  {% for post in page.posts %}
+    {% unless post.draft %}
+      <section class="index">
+        <div>
+            <h3 class="title"><a href="{{ post.url }}" rel="prefetch">{{ post.title }}</a></h3>
+            {% if post.subtitle %}
+              <h5 class="subtitle">{{ post.subtitle }}</h5>
+            {% endif %}
+            {% if post.tags %}
+              <div class="tags">
+                {{ post | tags }}
+              </div>
+            {% endif %}
+            {% if post.excerpt %}
+            <p>{{ post.excerpt }}</p>
+            {% endif %}
+            <div class="meta">
+                <time pubdate datetime="{{ post.date | date: "%Y-%d-%B" }}" title="{{ post.date | date: "%B %d, %Y" }}">{{ post.date | date: "%B %d, %Y" }}</time>
+            </div>
+        </div>
+        <hr>
+      </section>
+    {% endunless %}
+  {% endfor %}
+</article>
+
