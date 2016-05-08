@@ -143,11 +143,11 @@
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2016/05/05/hello-maoniu/">Hello Maoniu</a>
+                  <a class="post-link" href="/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/">Zap初始化</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2016-05-05
+                        <i class="fa fa-calendar"></i>2016-05-07
                     </div>
                     <div class="label-card">
                         
@@ -177,78 +177,138 @@
                     </div>
                 </div>
                 <div class="excerpt">
-                    
-<hr />
-<p>layout: post
-title:  “hello 牦牛装逼king”
-date:   2015-02-15 22:14:54
-categories: 牦牛
-tags: jekyll RubyGems
-—</p>
+                    <p>###OWASP ZAP 初始化过程</p>
 
+<p>Main方法入手
+  <code class="highlighter-rouge">java
+   //为了加载自定义的lang和lib所以需要自定义classloader
+        initClassLoader();
+        //判断以什么方式运行,默认当然是GUIBootstrap了.
+        ZapBootstrap bootstrap = createZapBootstrap(cmdLine);
+        try {
+            //GO GO GO
+            int rc = bootstrap.start();
+            if (rc != 0) {
+                System.exit(rc);
+            }
+        } catch (final Exception e) {
+            logger.fatal(e.getMessage(), e);
+            System.exit(1);
+        }
+ </code>
+  在start方法中进行初始化过程，关键方法如下：</p>
 
-<p>牦牛:我不装逼浑身难受</p>
+<p>```java
+   @Override
+    public int start() {
+        //初始化内存\配置文件地址\国际化\静态配置等等
+        int rc = super.start();
+        if (rc != 0) {
+            return rc;
+        }</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>    //刷新log4j配置
+    BasicConfigurator.configure();
 
-                </div>
-                <div class="read-all">
-                    <a  href="/2016/05/05/hello-maoniu/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2015/02/12/hello3cat/">Hello3cat</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2015-02-12
-                    </div>
-                    <div class="label-card">
-                        
-                    </div>
-                    <div class="label-card">
-                        
-                    </div>
+    //打印版本信息和程序名字
+    logger.info(getStartingMessage());
+    //测试此环境是否支持显示器、键盘和鼠标
+    if (GraphicsEnvironment.isHeadless()) {
+        String headlessMessage = Constant.messages.getString("start.gui.headless", CommandLine.HELP);
+        logger.fatal(headlessMessage);
+        System.err.println(headlessMessage);
+        return 1;
+    }
+    //一种安全的调用方式.详细的请Google
+    EventQueue.invokeLater(new Runnable() {
 
-                    <div class="label-card">
-                    
+        @Override
+        public void run() {
+            startImpl();
+        }
+    });
+    return 0;
+}   ```
+</code></pre>
+</div>
 
+<p>基础配置(包括Model、View、SSL引擎、)完成后进行插件加载，代码如下
+  ```java
+      protected void loadExtension() {
+        // Step 1: Loading Common Extensions
+        addCommonExtension();</p>
 
-
-                    </div>
-
-                    <div class="label-card">
-                    
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
+<div class="highlighter-rouge"><pre class="highlight"><code>    // Step 2: Loading Extensions (slow)
+    addExtension();
     
-  
+    // Initializing all Extensions together
+    // Why hasn't been initialized in sequence?
+    getExtensionLoader().startLifeCycle();
+}
+</code></pre>
+</div>
 
-</span>
+<p>```</p>
 
-                    </div>
-                </div>
-                <div class="excerpt">
-                    
-<hr />
-<p>layout: post
-title:  “hello 3cat”
-date:   2015-02-15 22:14:54
-categories: 3cat
-tags: jekyll RubyGems
-—</p>
+<p>在上述最后一步中执行了初始化插件的动作
+  ```java
+    /**
+     * Initialize and start all Extensions
+     * This function loops for all getExtensionCount() exts
+     * launching each specific initialization element (model, xml, view, hook, etc.)
+     */
+    public void startLifeCycle() {</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>    // Percentages are passed into the calls as doubles
+    if (view != null) {
+		view.setSplashScreenLoadingCompletion(0.0);
+	}
 
-<p>3catispig</p>
+    // Step 3: initialize all (slow)
+    initAllExtension(5.0);
+    // Step 4: initialize models (quick)
+    initModelAllExtension(model, 0.0);
+    // Step 5: initialize xmls (quick)
+    initXMLAllExtension(model.getSession(), model.getOptionsParam(), 0.0);
+    // Step 6: initialize viewes (slow)
+    initViewAllExtension(view, 10.0);
+    // Step 7: initialize hooks (slowest)
+    hookAllExtension(75.0);
+    // Step 8: start all extensions(quick)
+    startAllExtension(10.0);
+}   ```
+</code></pre>
+</div>
+
+<p>插件加载完成后执行HTTP代理服务器启动代理功能
+  ```java
+  private boolean init(ControlOverrides overrides) {</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	// Load extensions first as message bundles are loaded as a side effect
+	loadExtension();
+
+	// ZAP: Start proxy even if no view
+    Proxy proxy = getProxy(overrides);
+    getExtensionLoader().hookProxyListener(proxy);
+    getExtensionLoader().hookPersistentConnectionListener(proxy);
+	
+	if (view != null) {
+	    // ZAP: Add site map listeners
+	    getExtensionLoader().hookSiteMapListener(view.getSiteTreePanel());
+	}
+	
+	model.postInit();
+	return proxy.startServer();
+}   ```
+</code></pre>
+</div>
+
+<p>最终启动Main主窗口</p>
 
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2015/02/12/hello3cat/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -280,9 +340,7 @@ tags: jekyll RubyGems
                 </div>
                 <ul class="content-ul" recent>
                     
-                        <li><a href="/2016/05/05/hello-maoniu/">Hello Maoniu</a></li>
-                    
-                        <li><a href="/2015/02/12/hello3cat/">Hello3cat</a></li>
+                        <li><a href="/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/">Zap初始化</a></li>
                     
                 </ul>
             </div>

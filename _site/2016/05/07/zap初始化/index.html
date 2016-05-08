@@ -1,20 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>IceWAR</title>
-    <description></description>
-    <link>http://icewar.github.io/</link>
-    <atom:link href="http://icewar.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 08 May 2016 20:48:20 +0800</pubDate>
-    <lastBuildDate>Sun, 08 May 2016 20:48:20 +0800</lastBuildDate>
-    <generator>Jekyll v3.1.3</generator>
-    
-      <item>
-        <title>Zap初始化</title>
-        <description>&lt;p&gt;###OWASP ZAP 初始化过程&lt;/p&gt;
+<p>###OWASP ZAP 初始化过程</p>
 
-&lt;p&gt;Main方法入手
-  &lt;code class=&quot;highlighter-rouge&quot;&gt;java
+<p>Main方法入手
+  <code class="highlighter-rouge">java
    //为了加载自定义的lang和lib所以需要自定义classloader
         initClassLoader();
         //判断以什么方式运行,默认当然是GUIBootstrap了.
@@ -29,26 +16,26 @@
             logger.fatal(e.getMessage(), e);
             System.exit(1);
         }
- &lt;/code&gt;
-  在start方法中进行初始化过程，关键方法如下：&lt;/p&gt;
+ </code>
+  在start方法中进行初始化过程，关键方法如下：</p>
 
-&lt;p&gt;```java
+<p>```java
    @Override
     public int start() {
         //初始化内存\配置文件地址\国际化\静态配置等等
         int rc = super.start();
         if (rc != 0) {
             return rc;
-        }&lt;/p&gt;
+        }</p>
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    //刷新log4j配置
+<div class="highlighter-rouge"><pre class="highlight"><code>    //刷新log4j配置
     BasicConfigurator.configure();
 
     //打印版本信息和程序名字
     logger.info(getStartingMessage());
     //测试此环境是否支持显示器、键盘和鼠标
     if (GraphicsEnvironment.isHeadless()) {
-        String headlessMessage = Constant.messages.getString(&quot;start.gui.headless&quot;, CommandLine.HELP);
+        String headlessMessage = Constant.messages.getString("start.gui.headless", CommandLine.HELP);
         logger.fatal(headlessMessage);
         System.err.println(headlessMessage);
         return 1;
@@ -63,37 +50,37 @@
     });
     return 0;
 }   ```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+</code></pre>
+</div>
 
-&lt;p&gt;基础配置(包括Model、View、SSL引擎、)完成后进行插件加载，代码如下
+<p>基础配置(包括Model、View、SSL引擎、)完成后进行插件加载，代码如下
   ```java
       protected void loadExtension() {
         // Step 1: Loading Common Extensions
-        addCommonExtension();&lt;/p&gt;
+        addCommonExtension();</p>
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    // Step 2: Loading Extensions (slow)
+<div class="highlighter-rouge"><pre class="highlight"><code>    // Step 2: Loading Extensions (slow)
     addExtension();
     
     // Initializing all Extensions together
-    // Why hasn&#39;t been initialized in sequence?
+    // Why hasn't been initialized in sequence?
     getExtensionLoader().startLifeCycle();
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+</code></pre>
+</div>
 
-&lt;p&gt;```&lt;/p&gt;
+<p>```</p>
 
-&lt;p&gt;在上述最后一步中执行了初始化插件的动作
+<p>在上述最后一步中执行了初始化插件的动作
   ```java
     /**
      * Initialize and start all Extensions
      * This function loops for all getExtensionCount() exts
      * launching each specific initialization element (model, xml, view, hook, etc.)
      */
-    public void startLifeCycle() {&lt;/p&gt;
+    public void startLifeCycle() {</p>
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    // Percentages are passed into the calls as doubles
+<div class="highlighter-rouge"><pre class="highlight"><code>    // Percentages are passed into the calls as doubles
     if (view != null) {
 		view.setSplashScreenLoadingCompletion(0.0);
 	}
@@ -111,14 +98,14 @@
     // Step 8: start all extensions(quick)
     startAllExtension(10.0);
 }   ```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+</code></pre>
+</div>
 
-&lt;p&gt;插件加载完成后执行HTTP代理服务器启动代理功能
+<p>插件加载完成后执行HTTP代理服务器启动代理功能
   ```java
-  private boolean init(ControlOverrides overrides) {&lt;/p&gt;
+  private boolean init(ControlOverrides overrides) {</p>
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	// Load extensions first as message bundles are loaded as a side effect
+<div class="highlighter-rouge"><pre class="highlight"><code>	// Load extensions first as message bundles are loaded as a side effect
 	loadExtension();
 
 	// ZAP: Start proxy even if no view
@@ -134,18 +121,8 @@
 	model.postInit();
 	return proxy.startServer();
 }   ```
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+</code></pre>
+</div>
 
-&lt;p&gt;最终启动Main主窗口&lt;/p&gt;
+<p>最终启动Main主窗口</p>
 
-</description>
-        <pubDate>Sat, 07 May 2016 00:00:00 +0800</pubDate>
-        <link>http://icewar.github.io/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/</link>
-        <guid isPermaLink="true">http://icewar.github.io/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/</guid>
-        
-        
-      </item>
-    
-  </channel>
-</rss>
