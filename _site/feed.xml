@@ -5,145 +5,434 @@
     <description></description>
     <link>http://icewar.github.io/</link>
     <atom:link href="http://icewar.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 08 May 2016 20:48:20 +0800</pubDate>
-    <lastBuildDate>Sun, 08 May 2016 20:48:20 +0800</lastBuildDate>
+    <pubDate>Sun, 08 May 2016 22:40:10 +0800</pubDate>
+    <lastBuildDate>Sun, 08 May 2016 22:40:10 +0800</lastBuildDate>
     <generator>Jekyll v3.1.3</generator>
     
       <item>
-        <title>Zap初始化</title>
-        <description>&lt;p&gt;###OWASP ZAP 初始化过程&lt;/p&gt;
+        <title>ZAP初始化流程</title>
+        <description>&lt;h3 id=&quot;owasp-zap-&quot;&gt;OWASP ZAP 初始化过程&lt;/h3&gt;
 
-&lt;p&gt;Main方法入手
-  &lt;code class=&quot;highlighter-rouge&quot;&gt;java
-   //为了加载自定义的lang和lib所以需要自定义classloader
-        initClassLoader();
-        //判断以什么方式运行,默认当然是GUIBootstrap了.
-        ZapBootstrap bootstrap = createZapBootstrap(cmdLine);
-        try {
-            //GO GO GO
-            int rc = bootstrap.start();
-            if (rc != 0) {
-                System.exit(rc);
-            }
-        } catch (final Exception e) {
-            logger.fatal(e.getMessage(), e);
-            System.exit(1);
-        }
- &lt;/code&gt;
-  在start方法中进行初始化过程，关键方法如下：&lt;/p&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#owasp-zap-&quot; id=&quot;markdown-toc-owasp-zap-&quot;&gt;OWASP ZAP 初始化过程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;```java
-   @Override
-    public int start() {
-        //初始化内存\配置文件地址\国际化\静态配置等等
-        int rc = super.start();
-        if (rc != 0) {
-            return rc;
-        }&lt;/p&gt;
+&lt;p&gt;OWASP ZAP扫描器的初始化流程，大致分为初始化classloader、加载配置文件和初始化Model、View、加载消息总线、加载插件、初始化插件、启动Http代理服务器。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    //刷新log4j配置
-    BasicConfigurator.configure();
+&lt;p&gt;Main方法入手&lt;/p&gt;
 
-    //打印版本信息和程序名字
-    logger.info(getStartingMessage());
-    //测试此环境是否支持显示器、键盘和鼠标
-    if (GraphicsEnvironment.isHeadless()) {
-        String headlessMessage = Constant.messages.getString(&quot;start.gui.headless&quot;, CommandLine.HELP);
-        logger.fatal(headlessMessage);
-        System.err.println(headlessMessage);
-        return 1;
-    }
-    //一种安全的调用方式.详细的请Google
-    EventQueue.invokeLater(new Runnable() {
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//为了加载自定义的lang和lib所以需要自定义classloader&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;initClassLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//判断以什么方式运行,默认当然是GUIBootstrap了.&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ZapBootstrap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bootstrap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;createZapBootstrap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmdLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//GO GO GO&lt;/span&gt;
+            &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bootstrap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fatal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-        @Override
-        public void run() {
-            startImpl();
-        }
-    });
-    return 0;
-}   ```
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;基础配置(包括Model、View、SSL引擎、)完成后进行插件加载，代码如下
-  ```java
-      protected void loadExtension() {
-        // Step 1: Loading Common Extensions
-        addCommonExtension();&lt;/p&gt;
+&lt;p&gt;在start方法中进行初始化过程，关键方法如下：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    // Step 2: Loading Extensions (slow)
-    addExtension();
-    
-    // Initializing all Extensions together
-    // Why hasn&#39;t been initialized in sequence?
-    getExtensionLoader().startLifeCycle();
-}
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//初始化内存\配置文件地址\国际化\静态配置等等&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;//刷新log4j配置&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;BasicConfigurator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;//打印版本信息和程序名字&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getStartingMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//测试此环境是否支持显示器、键盘和鼠标&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GraphicsEnvironment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isHeadless&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headlessMessage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;messages&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;start.gui.headless&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CommandLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;HELP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fatal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headlessMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headlessMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//一种安全的调用方式.详细的请Google&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;EventQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;invokeLater&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+            &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;startImpl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+&lt;p&gt;基础配置(包括Model、View、SSL引擎、)完成后进行插件加载，代码如下&lt;/p&gt;
 
-&lt;p&gt;在上述最后一步中执行了初始化插件的动作
-  ```java
-    /**
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loadExtension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 1: Loading Common Extensions&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;addCommonExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 2: Loading Extensions (slow)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;addExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Initializing all Extensions together&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Why hasn&#39;t been initialized in sequence?&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;getExtensionLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;startLifeCycle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在上述最后一步中执行了初始化插件的动作&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;cm&quot;&gt;/**
      * Initialize and start all Extensions
      * This function loops for all getExtensionCount() exts
      * launching each specific initialization element (model, xml, view, hook, etc.)
-     */
-    public void startLifeCycle() {&lt;/p&gt;
+     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;startLifeCycle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        
+        &lt;span class=&quot;c1&quot;&gt;// Percentages are passed into the calls as doubles&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    		&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setSplashScreenLoadingCompletion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    // Percentages are passed into the calls as doubles
-    if (view != null) {
-		view.setSplashScreenLoadingCompletion(0.0);
-	}
-
-    // Step 3: initialize all (slow)
-    initAllExtension(5.0);
-    // Step 4: initialize models (quick)
-    initModelAllExtension(model, 0.0);
-    // Step 5: initialize xmls (quick)
-    initXMLAllExtension(model.getSession(), model.getOptionsParam(), 0.0);
-    // Step 6: initialize viewes (slow)
-    initViewAllExtension(view, 10.0);
-    // Step 7: initialize hooks (slowest)
-    hookAllExtension(75.0);
-    // Step 8: start all extensions(quick)
-    startAllExtension(10.0);
-}   ```
+        &lt;span class=&quot;c1&quot;&gt;// Step 3: initialize all (slow)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;initAllExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;5.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 4: initialize models (quick)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;initModelAllExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 5: initialize xmls (quick)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;initXMLAllExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOptionsParam&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 6: initialize viewes (slow)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;initViewAllExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 7: initialize hooks (slowest)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;hookAllExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;75.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Step 8: start all extensions(quick)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;startAllExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;插件加载完成后执行HTTP代理服务器启动代理功能
-  ```java
-  private boolean init(ControlOverrides overrides) {&lt;/p&gt;
+&lt;p&gt;插件加载完成后执行HTTP代理服务器启动代理功能&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	// Load extensions first as message bundles are loaded as a side effect
-	loadExtension();
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ControlOverrides&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overrides&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 
-	// ZAP: Start proxy even if no view
-    Proxy proxy = getProxy(overrides);
-    getExtensionLoader().hookProxyListener(proxy);
-    getExtensionLoader().hookPersistentConnectionListener(proxy);
-	
-	if (view != null) {
-	    // ZAP: Add site map listeners
-	    getExtensionLoader().hookSiteMapListener(view.getSiteTreePanel());
-	}
-	
-	model.postInit();
-	return proxy.startServer();
-}   ```
+    	&lt;span class=&quot;c1&quot;&gt;// Load extensions first as message bundles are loaded as a side effect&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;loadExtension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+		&lt;span class=&quot;c1&quot;&gt;// ZAP: Start proxy even if no view&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;Proxy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;proxy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getProxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;overrides&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;getExtensionLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hookProxyListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;getExtensionLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hookPersistentConnectionListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		    &lt;span class=&quot;c1&quot;&gt;// ZAP: Add site map listeners&lt;/span&gt;
+		    &lt;span class=&quot;n&quot;&gt;getExtensionLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hookSiteMapListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSiteTreePanel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+		
+		&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;postInit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;startServer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;最终启动Main主窗口&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 07 May 2016 00:00:00 +0800</pubDate>
-        <link>http://icewar.github.io/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/</link>
-        <guid isPermaLink="true">http://icewar.github.io/2016/05/07/zap%E5%88%9D%E5%A7%8B%E5%8C%96/</guid>
+        <pubDate>Sun, 08 May 2016 06:14:54 +0800</pubDate>
+        <link>http://icewar.github.io/2016/05/08/zap%E5%88%9D%E5%A7%8B%E5%8C%96/</link>
+        <guid isPermaLink="true">http://icewar.github.io/2016/05/08/zap%E5%88%9D%E5%A7%8B%E5%8C%96/</guid>
         
+        <category>扫描器</category>
+        
+        <category>ZAP</category>
+        
+        
+        <category>源码分析</category>
+        
+      </item>
+    
+      <item>
+        <title>在低版本 IE 中点击空 block 元素的问题</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;问题描述&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;使用场景&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-2&quot; id=&quot;markdown-toc-section-2&quot;&gt;解决办法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;问题描述&lt;/h2&gt;
+
+&lt;p&gt;当我们点击一个空的、没有任何内容的 div 或者其他块级元素时。在 IE11 以下，是没有反应的。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;使用场景&lt;/h2&gt;
+
+&lt;p&gt;这类问题使用场景还是很普遍的。比如 UI 给了一张大图，要点击图上的某一块位置的时候。可以用一个空的 div 定位到相应的位置，然后对它进行绑定事件。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;解决办法&lt;/h2&gt;
+
+&lt;p&gt;解决方法很简单，即给这个块级元素填充任意颜色，然后将其透明度设置为0。代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;background-color: #fff;
+     opacity: 0;
+   filter:alpha(opacity=0);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;123&lt;/p&gt;
+</description>
+        <pubDate>Fri, 24 Jul 2015 08:06:05 +0800</pubDate>
+        <link>http://icewar.github.io/2015/07/24/low-IE-click-empty-block-bug/</link>
+        <guid isPermaLink="true">http://icewar.github.io/2015/07/24/low-IE-click-empty-block-bug/</guid>
+        
+        <category>IE</category>
+        
+        <category>CSS</category>
+        
+        <category>兼容性</category>
+        
+        <category>HTML</category>
+        
+        
+        <category>CSS</category>
+        
+      </item>
+    
+      <item>
+        <title>Weinre --WebApp 调试工具</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#weinre&quot; id=&quot;markdown-toc-weinre&quot;&gt;什么是 weinre？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#weinre-1&quot; id=&quot;markdown-toc-weinre-1&quot;&gt;为什么用 weinre？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;原理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;安装&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-2&quot; id=&quot;markdown-toc-section-2&quot;&gt;使用&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-3&quot; id=&quot;markdown-toc-section-3&quot;&gt;参考&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;weinre&quot;&gt;什么是 weinre？&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html&quot;&gt;weinre官网&lt;/a&gt; 上有两句有意思的介绍：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;weinre&lt;/strong&gt; is &lt;strong&gt;WE&lt;/strong&gt;b &lt;strong&gt;IN&lt;/strong&gt;spector &lt;strong&gt;RE&lt;/strong&gt;mote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really.&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;weinre&lt;/strong&gt; is a debugger for web pages, like FireBug (for FireFox) and Web Inspector (for WebKit-based browsers), except it’s designed to work remotely, and in particular, to allow you debug web pages on a mobile device such as a phone.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;上面说 weinre 是一个远程 web 调试器。说到了它的发音，还挺幽默，哈哈。&lt;/p&gt;
+
+&lt;p&gt;远程 web 调试器。先说调试器，就像火狐中的 FireBug，Chrome 中的调试器一样。就是在浏览器中按下 &lt;code class=&quot;highlighter-rouge&quot;&gt;F12&lt;/code&gt; 出现的那个工具。但是在手机上，你没办法按 &lt;code class=&quot;highlighter-rouge&quot;&gt;F12&lt;/code&gt;，而这个 weinre 就是在手机上的 &lt;code class=&quot;highlighter-rouge&quot;&gt;F12&lt;/code&gt;，与传统的不同的是，它是在手机上浏览你的 web 页面，在 PC 上查看调试工具，非常方便，这就是所谓的远程。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;weinre-1&quot;&gt;为什么用 weinre？&lt;/h2&gt;
+
+&lt;p&gt;现代浏览器中调试工具都非常强大了，可以直接模拟手机设备，为什么还要用 weinre 这么麻烦的东西呢？&lt;/p&gt;
+
+&lt;p&gt;我觉得 PC 端的浏览器虽说可以模拟，但模拟毕竟还是模拟，还只是鼠标长按滑来滑去。在开发过程中，使用手机或平板直接来感受是多么的酷，指尖在移动设备的屏幕上摩擦摩擦！给人的直观感受绝对秒杀浏览器的模拟。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;原理&lt;/h2&gt;
+
+&lt;p&gt;使用一种工具之前，了解它的原理和结构是很有帮助的。weinre 作为一种远程调试工具，在结构上分为三层：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;目标页面（target）：被调试的页面，页面已嵌入 weinre 的远程 js，下文会介绍；&lt;/li&gt;
+  &lt;li&gt;Debug客户端（client）：本地的 Web Inspector 调试客户端；&lt;/li&gt;
+  &lt;li&gt;Debug服务端（agent）：一个 HTTP Server，为目标页面与 Debug 客户端建立通信。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;三层结构如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://muellerware.org/papers/weinre/images/http-flow.png&quot; alt=&quot;http-flow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;weinre 的 debug 客户端是基于 Web Inspector 开发，而 Web Inspector 只与以 WebKit 为核心的浏览器兼容，所以 Weinre 的客户端只能用 Chrome 或者 Safari 打开。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html&quot;&gt;官网&lt;/a&gt;上也有相应的平台支持说明：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Platforms supported - debug server 服务端&lt;/p&gt;
+
+    &lt;p&gt;任何支持 node.js 的平台。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Platforms supported - debug client 客户端（跑 debugger 界面的浏览器）&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Google Chrome&lt;/li&gt;
+      &lt;li&gt;Apple Safari&lt;/li&gt;
+      &lt;li&gt;Other recent-ish WebKit-based browsers 其他基于 webkit 内核的现代浏览器&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Platforms supported - debug target 目标页面（在移动设备中调试运行的目标页面）&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Android Browser application&lt;/li&gt;
+      &lt;li&gt;iOS Mobile Safari application&lt;/li&gt;
+      &lt;li&gt;PhoneGap/Cordova&lt;/li&gt;
+      &lt;li&gt;other&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;安装&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;weinre 是 nodeJS 的一个应用，首先要 &lt;a href=&quot;https://nodejs.org/&quot;&gt;安装 nodeJS 运行环境&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;使用 npm 命令，安装 weinre&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; npm -g install weinre
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;安装成功后会有类似的信息：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; C:\Users\haoyang\AppData\Roaming\npm\weinre -&amp;gt; C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre\weinre
+ weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre
+ ├── underscore@1.7.0
+ ├── nopt@3.0.2 (abbrev@1.0.7)
+ └── express@2.5.11 (mime@1.2.4, qs@0.4.2, mkdirp@0.3.0, connect@1.9.2)
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;使用&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动服务&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; weinre --boundHost -all- --httpPort 8081
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;–boundHost [hostname | ip address | -all-]&lt;/p&gt;
+
+        &lt;p&gt;The ip address to bind the server to.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;–httpPort [portNumber]&lt;/p&gt;
+
+        &lt;p&gt;The port to run the HTTP server on.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;更多配置项参考 &lt;a href=&quot;http://people.apache.org/~pmuellr/weinre/docs/latest/Running.html&quot;&gt;官网的说明&lt;/a&gt;。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动成功后看到如下界面：&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;http://7q5cdt.com1.z0.glb.clouddn.com/blog-weinre.png&quot; alt=&quot;weinre&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;给目标页面添加一行脚本&lt;/p&gt;
+
+    &lt;p&gt;可以看到 2.中的 Target Script 说要添加一行脚本到要调试的 web 页面中。&lt;/p&gt;
+
+    &lt;p&gt;Target Script&lt;/p&gt;
+
+    &lt;p&gt;You can use this script to inject the weinre target code into your web page.&lt;/p&gt;
+
+    &lt;p&gt;http://localhost:8081/target/target-script-min.js#anonymous&lt;/p&gt;
+
+    &lt;p&gt;Example:&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &amp;lt;script src=&quot;http://localhost:8081/target/target-script-min.js#anonymous&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;这里要说明一下，要把上面的 localhost 换为本机的 ip 地址。&lt;/p&gt;
+
+    &lt;p&gt;我们可以在命令行中 使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;ipconfig&lt;/code&gt; 得到 ip 地址，如下（当然你的可能和我的不一样）：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; IPv4 地址 . . . . . . . . . . . . : 192.168.1.107
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;即插入如下代码：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &amp;lt;script src=&quot;http://192.168.1.107:8081/target/target-script-min.js#anonymous&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;进入调试页面&lt;/p&gt;
+
+    &lt;p&gt;PC 端访问这个地址：&lt;/p&gt;
+
+    &lt;p&gt;debug client user interface:    http://localhost:8081/client/#anonymous&lt;/p&gt;
+
+    &lt;p&gt;此时 target 为 none，如下图：&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;http://7q5cdt.com1.z0.glb.clouddn.com/blog-target-none.png&quot; alt=&quot;target-none&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;现在我们要用手机访问同一个局域网下的这个目标页面。我们可以把要调试的页面放到这个路径下：&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre\web
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;通过 http://192.168.1.107:8081/FILE_NAME 在手机上访问，就可以看到了。当然前提是同一个局域网。&lt;/p&gt;
+
+    &lt;p&gt;但是这样可能不太灵活，每次都要把目标页面放到指定的目录下。所以我们可以另外开一个服务器。&lt;/p&gt;
+
+    &lt;p&gt;我使用了基于 node.js 的 http-server 工具。将要调试的页面发布。这样我就能通过 ip 地址加端口号在手机上访问到了。&lt;/p&gt;
+
+    &lt;p&gt;我在手机上访问 http://192.168.1.107:8080 打开要调试的页面，此时 debug client user interface 中自动检测到 target。就可以进行调试了！&lt;/p&gt;
+
+    &lt;p&gt;如下图：&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;http://7q5cdt.com1.z0.glb.clouddn.com/blog-target.png&quot; alt=&quot;target&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;http://7q5cdt.com1.z0.glb.clouddn.com/blog-1954958440_meitu_2.jpg&quot; alt=&quot;phone&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;参考&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/dojotoolkit/article/details/6280924&quot;&gt;Web移动应用调试工具——Weinre&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://muellerware.org/papers/weinre/manual.html&quot;&gt;weinre - WEb INspector REmote&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/smy_yu/article/details/38922315&quot;&gt;webapp开发调试环境–weinre配置&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 18 Jun 2015 08:06:05 +0800</pubDate>
+        <link>http://icewar.github.io/2015/06/18/weinre/</link>
+        <guid isPermaLink="true">http://icewar.github.io/2015/06/18/weinre/</guid>
+        
+        <category>Weinre</category>
+        
+        <category>WebApp</category>
+        
+        <category>调试工具</category>
+        
+        <category>JavaScript</category>
+        
+        <category>HTML</category>
+        
+        <category>CSS</category>
+        
+        
+        <category>JavaScript</category>
         
       </item>
     
